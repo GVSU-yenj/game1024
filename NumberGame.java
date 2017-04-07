@@ -125,38 +125,8 @@ public class NumberGame implements NumberSlider {
 					}
 				}
 			}
-			
-			if (dir == SlideDirection.UP){
-				for (int i = 0; i<this.row-1; i++){
-					for (int j = 0; j < this.col; j++){
-							while(board[i-1][j] == 0){
-								//System.out.println("below row   "+j + " col " +(k+1)+ " row then val before: " +board[k+1][j]);
-								//System.out.println("current row "+j + " col " +(k)+ " row then val before:  " +board[k][j]);
-								board[k-1][j] = board[k][j];
-								board[k][j] = 0;
-								//System.out.println("current row "+j + " col " +(k)+ " row then val after:  " +board[k][j]);
-								//System.out.println("below row   "+j + " col " +(k+1)+ " row then val after:  " +board[k+1][j]);
-								//time++;
-								//System.out.println("time1: " +time);
-								stacksOnStacks.push(board);
-								break;
-							} 
-							if(board[k][j] == board[k-1][j]){
-								board[k-1][j] = board[k][j] * 2;
-								board[k][j] =0;
-								//time2++;
-								//System.out.println("time2: " + time2);
-								stacksOnStacks.push(board);
-								break;
-							}
-						}
-					}
-				}
-			}
 
-	if(dir==SlideDirection.DOWN)
-
-	{
+	if(dir==SlideDirection.UP){
 		for (int i = 0; i < this.row - 1; i++) {
 			for (int j = 0; j < this.col; j++) {
 				while (board[i - 1][j] == 0) {
@@ -185,7 +155,39 @@ public class NumberGame implements NumberSlider {
 				}
 			}
 		}
-		return slideDir;
+	}
+	}
+
+	if(dir==SlideDirection.DOWN){
+		for(int i = 0;i<this.row-1;i++){
+		for (int j = 0; j < this.col; j++) {
+			while (board[i - 1][j] == 0) {
+				// System.out.println("below row "+j + " col " +(k+1)+ " row
+				// then val before: " +board[k+1][j]);
+				// System.out.println("current row "+j + " col " +(k)+ " row
+				// then val before: " +board[k][j]);
+				board[k - 1][j] = board[k][j];
+				board[k][j] = 0;
+				// System.out.println("current row "+j + " col " +(k)+ " row
+				// then val after: " +board[k][j]);
+				// System.out.println("below row "+j + " col " +(k+1)+ " row
+				// then val after: " +board[k+1][j]);
+				// time++;
+				// System.out.println("time1: " +time);
+				stacksOnStacks.push(board);
+				break;
+			}
+			if (board[k][j] == board[k - 1][j]) {
+				board[k - 1][j] = board[k][j] * 2;
+				board[k][j] = 0;
+				// time2++;
+				// System.out.println("time2: " + time2);
+				stacksOnStacks.push(board);
+				break;
+			}
+		}
+	}
+	 return slideDir;
 	}
 
 	@Override
@@ -222,7 +224,6 @@ public class NumberGame implements NumberSlider {
 			// status = GameStatus.USER_LOST;
 			status = GameStatus.IN_PROGRESS;
 		}
-
 		return status;
 	}
 
@@ -237,5 +238,4 @@ public class NumberGame implements NumberSlider {
 	public int[][] getBoard() {
 		return this.board;
 	}
-
 }
