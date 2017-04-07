@@ -92,12 +92,13 @@ public class NumberGame implements NumberSlider {
 					while(board[i][k-1] == 0){
 						board[i][k-1] = board[i][k];
 						board[i][k] = 0;
+						//should this stack addition line be here? uhhhhhhhhh I mean it'll work
 						stacksOnStacks.push(board);
 						break;
 					} 
 					if(board[i][k] == board[i][k-1]){
 						board[i][k-1] = board[i][k] * 2;
-						board[i][k] =0;
+						board[i][k] = 0;
 						stacksOnStacks.push(board);
 						break;
 					}
@@ -115,7 +116,7 @@ public class NumberGame implements NumberSlider {
 					} 
 					if(board[i][k] == board[i][k-1]){
 						board[i][k-1] = board[i][k] * 2;
-						board[i][k] =0;
+						board[i][k] = 0;
 						stacksOnStacks.push(board);
 						break;
 					}
@@ -133,7 +134,7 @@ public class NumberGame implements NumberSlider {
 					} 
 					if(board[i][k] == board[i][k-1]){
 						board[i][k-1] = board[i][k] * 2;
-						board[i][k] =0;
+						board[i][k] = 0;
 						stacksOnStacks.push(board);
 						break;
 					}
