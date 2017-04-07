@@ -36,7 +36,7 @@ public class NumberGame implements NumberSlider {
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		// TODO Make the "this.row" for all of the methods board.length and board[i].length !!
 		for (int i = 0; i < this.row; i++) {
 			for (int j = 0; j < this.col; j++) {
 				board[i][j] = 0;
@@ -160,6 +160,9 @@ public class NumberGame implements NumberSlider {
 			return slideDir;
 		}
 
+		/**
+		 * @return ArrayList<Cell> gives back a board of cells. I'd never use it, but hey, it's there.
+		 */
 		@Override
 		public ArrayList<Cell> getNonEmptyTiles() {
 			// nested for loop over whole board and if the value in the board 'cell'
