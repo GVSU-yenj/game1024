@@ -54,7 +54,6 @@ public class NumberGame implements NumberSlider {
 				board[i][j] = ref[i][j];
 			}
 		}
-
 	}
 
 	/**
@@ -86,9 +85,9 @@ public class NumberGame implements NumberSlider {
 	public boolean slide(SlideDirection dir) {
 		boolean slideDir = false;
 		//TODO: mod the directions accordingly. Right now they all do the same thing.
-		if (dir == SlideDirection.LEFT) {
-			for (int i = 0; i<this.row; i++){
-				for (int j = this.col-1; j>0; j--){
+		if(dir == SlideDirection.LEFT){
+			for(int i = 0; i<this.row; i++){
+				for(int j = this.col-1; j>0; j--){
 					while(board[i][k-1] == 0){
 						board[i][k-1] = board[i][k];
 						board[i][k] = 0;
@@ -105,12 +104,13 @@ public class NumberGame implements NumberSlider {
 				}
 			}
 		}
-		if (dir == SlideDirection.RIGHT) {
-			for (int i = 0; i<this.row; i++){
-				for (int j = this.col-1; j>0; j--){
+		if (dir == SlideDirection.RIGHT){
+			for(int i = 0; i<this.row; i++){
+				for(int j = this.col-1; j>0; j--){
 					while(board[i][k-1] == 0){
 						board[i][k-1] = board[i][k];
 						board[i][k] = 0;
+						//should this stack addition line be here? uhhhhhhhhh I mean it'll work
 						stacksOnStacks.push(board);
 						break;
 					} 
@@ -124,11 +124,12 @@ public class NumberGame implements NumberSlider {
 			}
 		}
 		if(dir==SlideDirection.UP){
-			for (int i = 0; i<this.row; i++){
-				for (int j = this.col-1; j>0; j--){
+			for(int i = 0; i<this.row; i++){
+				for(int j = this.col-1; j>0; j--){
 					while(board[i][k-1] == 0){
 						board[i][k-1] = board[i][k];
 						board[i][k] = 0;
+						//should this stack addition line be here? uhhhhhhhhh I mean it'll work
 						stacksOnStacks.push(board);
 						break;
 					} 
@@ -142,22 +143,24 @@ public class NumberGame implements NumberSlider {
 			}
 		}
 		if(dir==SlideDirection.DOWN){
-			for(int i = 0;i<this.row-1;i++){
-				for (int j = 0; j < this.col; j++) {
-					while (board[i - 1][j] == 0) {
-						board[k - 1][j] = board[k][j];
-						board[k][j] = 0;
+			for(int i = 0; i<this.row; i++){
+				for(int j = this.col-1; j>0; j--){
+					while(board[i][k-1] == 0){
+						board[i][k-1] = board[i][k];
+						board[i][k] = 0;
+						//should this stack addition line be here? uhhhhhhhhh I mean it'll work
 						stacksOnStacks.push(board);
 						break;
-					}
-					if(board[k][j] == board[k - 1][j]){
-						board[k - 1][j] = board[k][j] * 2;
-						board[k][j] = 0;
+					} 
+					if(board[i][k] == board[i][k-1]){
+						board[i][k-1] = board[i][k] * 2;
+						board[i][k] = 0;
 						stacksOnStacks.push(board);
 						break;
 					}
 				}
 			}
+		}
 			return slideDir;
 		}
 
