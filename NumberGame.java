@@ -124,93 +124,93 @@ public class NumberGame implements NumberSlider {
 				}
 			}
 		}
-	if(dir==SlideDirection.UP){
-		for (int i = 0; i<this.row; i++){
-			for (int j = this.col-1; j>0; j--){
-				while(board[i][k-1] == 0){
-					board[i][k-1] = board[i][k];
-					board[i][k] = 0;
-					stacksOnStacks.push(board);
-					break;
-				} 
-				if(board[i][k] == board[i][k-1]){
-					board[i][k-1] = board[i][k] * 2;
-					board[i][k] =0;
-					stacksOnStacks.push(board);
-					break;
+		if(dir==SlideDirection.UP){
+			for (int i = 0; i<this.row; i++){
+				for (int j = this.col-1; j>0; j--){
+					while(board[i][k-1] == 0){
+						board[i][k-1] = board[i][k];
+						board[i][k] = 0;
+						stacksOnStacks.push(board);
+						break;
+					} 
+					if(board[i][k] == board[i][k-1]){
+						board[i][k-1] = board[i][k] * 2;
+						board[i][k] =0;
+						stacksOnStacks.push(board);
+						break;
+					}
 				}
 			}
 		}
-	}
 
-if(dir==SlideDirection.DOWN){
-	for(int i = 0;i<this.row-1;i++){
-		for (int j = 0; j < this.col; j++) {
-			while (board[i - 1][j] == 0) {
-				board[k - 1][j] = board[k][j];
-				board[k][j] = 0;
-				stacksOnStacks.push(board);
-				break;
+		if(dir==SlideDirection.DOWN){
+			for(int i = 0;i<this.row-1;i++){
+				for (int j = 0; j < this.col; j++) {
+					while (board[i - 1][j] == 0) {
+						board[k - 1][j] = board[k][j];
+						board[k][j] = 0;
+						stacksOnStacks.push(board);
+						break;
+					}
+					if(board[k][j] == board[k - 1][j]){
+						board[k - 1][j] = board[k][j] * 2;
+						board[k][j] = 0;
+						stacksOnStacks.push(board);
+						break;
+					}
+				}
 			}
-			if(board[k][j] == board[k - 1][j]){
-				board[k - 1][j] = board[k][j] * 2;
-				board[k][j] = 0;
-				stacksOnStacks.push(board);
-				break;
-			}
+			return slideDir;
 		}
-	}
-	return slideDir;
-}
 
-@Override
-public ArrayList<Cell> getNonEmptyTiles() {
-	// nested for loop over whole board and if the value in the board 'cell'
-	// !0 then create new cell at that location.
+		@Override
+		public ArrayList<Cell> getNonEmptyTiles() {
+			// nested for loop over whole board and if the value in the board 'cell'
+			// !0 then create new cell at that location.
 
-	for (int i = 0; i < this.row; i++) {
-		for (int j = 0; j < this.col; j++) {
-			if (!(board[i][j] == 0)){
-				gameCell = new Cell(i, j, board[i][j]);
-				temp.add(gameCell);
+			for (int i = 0; i < this.row; i++) {
+				for (int j = 0; j < this.col; j++) {
+					if (!(board[i][j] == 0)){
+						gameCell = new Cell(i, j, board[i][j]);
+						temp.add(gameCell);
+					}
+				}
 			}
+			return temp;
 		}
+
+		/**
+		 * call getNonEmptyTiles and if any values == winningValue then set equal to
+		 * USER_WON, if all tiles filled and no moves, USER_LOST if no winning value
+		 * and still moves available, IN_PROGRESS
+		 * 
+		 */
+		@Override
+		public GameStatus getStatus() {
+			GameStatus status;
+			if (gameCell.value != winningValue) {
+				status = GameStatus.IN_PROGRESS;
+			}
+			if (gameCell.value == winningValue) {
+				status = GameStatus.USER_WON;
+			} 
+			else {
+				// status = GameStatus.USER_LOST;
+				status = GameStatus.IN_PROGRESS;
+			}
+			return status;
+		}
+
+		@Override
+		public void undo() {
+			// TODO Auto-generated method stub
+			// set game goard equal to to board when pop
+			stacksOnStacks.pop();
+		}
+
+		@Override
+		public int[][] getBoard() {
+			return this.board;
+		}
+
 	}
-	return temp;
-}
-
-/**
- * call getNonEmptyTiles and if any values == winningValue then set equal to
- * USER_WON, if all tiles filled and no moves, USER_LOST if no winning value
- * and still moves available, IN_PROGRESS
- * 
- */
-@Override
-public GameStatus getStatus() {
-	GameStatus status;
-	if (gameCell.value != winningValue) {
-		status = GameStatus.IN_PROGRESS;
-	}
-	if (gameCell.value == winningValue) {
-		status = GameStatus.USER_WON;
-	} 
-		else {
-		// status = GameStatus.USER_LOST;
-		status = GameStatus.IN_PROGRESS;
-	}
-	return status;
-}
-
-@Override
-public void undo() {
-	// TODO Auto-generated method stub
-	// set game goard equal to to board when pop
-	stacksOnStacks.pop();
-}
-
-@Override
-public int[][] getBoard() {
-	return this.board;
-}
-
-}
