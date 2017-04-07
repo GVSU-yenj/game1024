@@ -30,7 +30,8 @@ public class NumberGame implements NumberSlider {
 					this.col = width;
 				}
 			}
-		} catch (IllegalArgumentException ex) {
+		} 
+		catch (IllegalArgumentException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -63,6 +64,9 @@ public class NumberGame implements NumberSlider {
 	 * 
 	 * @return Cell a new cell in the board.
 	 */
+	//TODO: modify to make it not do the while checker!
+	//while smarter, it is not what I would have done. 
+	//I would have had it check random spots until it placed something!
 	@Override
 	public Cell placeRandomValue() {
 		// gameCell = new Cell();
@@ -87,7 +91,7 @@ public class NumberGame implements NumberSlider {
 	public boolean slide(SlideDirection dir) {
 		boolean slideDir = false;
 
-		//TODO: mod the directions accordingly.
+		//TODO: mod the directions accordingly. Right now they all do the same thing.
 		if (dir == SlideDirection.LEFT) {
 			for (int i = 0; i<this.row; i++){
 				for (int j = this.col-1; j>0; j--){
