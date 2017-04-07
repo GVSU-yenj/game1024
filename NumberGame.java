@@ -67,13 +67,10 @@ public class NumberGame implements NumberSlider {
 	//I would have had it check random spots until it placed something!
 	@Override
 	public Cell placeRandomValue() {
-		// gameCell = new Cell();
 		boolean b = false;
-		int randVal;
-		int value;
-
-		randVal = randy.nextInt(8) + 1;
-		value = (int) Math.pow(2, (randVal));
+		int randVal = randy.nextInt(8) + 1;;
+		int value = (int) Math.pow(2, (randVal));
+		
 		while (b == false) {
 			int r = randy.nextInt(4);
 			int c = randy.nextInt(4);
@@ -88,7 +85,6 @@ public class NumberGame implements NumberSlider {
 	@Override
 	public boolean slide(SlideDirection dir) {
 		boolean slideDir = false;
-
 		//TODO: mod the directions accordingly. Right now they all do the same thing.
 		if (dir == SlideDirection.LEFT) {
 			for (int i = 0; i<this.row; i++){
@@ -144,7 +140,6 @@ public class NumberGame implements NumberSlider {
 				}
 			}
 		}
-
 		if(dir==SlideDirection.DOWN){
 			for(int i = 0;i<this.row-1;i++){
 				for (int j = 0; j < this.col; j++) {
