@@ -23,8 +23,8 @@ public class NumberGame implements NumberSlider {
 				int val = (int) Math.pow(2, i);
 				if (val == winningValue) {
 					board = new int[height][width];// gameCell = new
-													// Cell(height, width,
-													// winningValue);
+					// Cell(height, width,
+					// winningValue);
 					this.winningValue = winningValue;
 					this.row = height;
 					this.col = width;
@@ -79,163 +79,138 @@ public class NumberGame implements NumberSlider {
 				board[r][c] = value;
 				b = true;
 			}
-
 		}
-
 		return gameCell;
 	}
 
 	@Override
-		public boolean slide(SlideDirection dir) {
-			boolean slideDir = false;
-			
-			if (dir == SlideDirection.LEFT) {
-				for(int i = 0; i <this.col; i++){
-					for(int j = this.row-1; j>0;j--){
-						board[j][i] = board[j-1][i];
-						System.out.println(i + " col " + j+ " row then val: " +board[j][i]);
-						gameCell = new Cell(j,i,board[j][i]);
-						temp.add(gameCell);
-						gameCell = new Cell(j-1,i,0);
-						temp.add(gameCell);
-						placeRandomValue();
-						
+	public boolean slide(SlideDirection dir) {
+		boolean slideDir = false;
+
+		//TODO: mod the directions accordingly.
+		if (dir == SlideDirection.LEFT) {
+			for (int i = 0; i<this.row; i++){
+				for (int j = this.col-1; j>0; j--){
+					while(board[i][k-1] == 0){
+						board[i][k-1] = board[i][k];
+						board[i][k] = 0;
+						stacksOnStacks.push(board);
+						break;
+					} 
+					if(board[i][k] == board[i][k-1]){
+						board[i][k-1] = board[i][k] * 2;
+						board[i][k] =0;
+						stacksOnStacks.push(board);
+						break;
 					}
 				}
 			}
-
-			if (dir == SlideDirection.RIGHT) {
-				for (int i = 0; i<this.row; i++){
-					for (int j = this.col-1; j>0; j--){
-							while(board[i][k-1] == 0){
-								board[i][k-1] = board[i][k];
-								board[i][k] = 0;
-								stacksOnStacks.push(board);
-								break;
-							} 
-							if(board[i][k] == board[i][k-1]){
-								board[i][k-1] = board[i][k] * 2;
-								board[i][k] =0;
-								//time2++;
-								//System.out.println("time2: " + time2);
-								stacksOnStacks.push(board);
-								break;
-							}
-						}
+		}
+		if (dir == SlideDirection.RIGHT) {
+			for (int i = 0; i<this.row; i++){
+				for (int j = this.col-1; j>0; j--){
+					while(board[i][k-1] == 0){
+						board[i][k-1] = board[i][k];
+						board[i][k] = 0;
+						stacksOnStacks.push(board);
+						break;
+					} 
+					if(board[i][k] == board[i][k-1]){
+						board[i][k-1] = board[i][k] * 2;
+						board[i][k] =0;
+						stacksOnStacks.push(board);
+						break;
 					}
 				}
 			}
-
+		}
 	if(dir==SlideDirection.UP){
-		for (int i = 0; i < this.row - 1; i++) {
-			for (int j = 0; j < this.col; j++) {
-				while (board[i - 1][j] == 0) {
-					// System.out.println("below row "+j + " col " +(k+1)+ " row
-					// then val before: " +board[k+1][j]);
-					// System.out.println("current row "+j + " col " +(k)+ " row
-					// then val before: " +board[k][j]);
-					board[k - 1][j] = board[k][j];
-					board[k][j] = 0;
-					// System.out.println("current row "+j + " col " +(k)+ " row
-					// then val after: " +board[k][j]);
-					// System.out.println("below row "+j + " col " +(k+1)+ " row
-					// then val after: " +board[k+1][j]);
-					// time++;
-					// System.out.println("time1: " +time);
+		for (int i = 0; i<this.row; i++){
+			for (int j = this.col-1; j>0; j--){
+				while(board[i][k-1] == 0){
+					board[i][k-1] = board[i][k];
+					board[i][k] = 0;
 					stacksOnStacks.push(board);
 					break;
-				}
-				if (board[k][j] == board[k - 1][j]) {
-					board[k - 1][j] = board[k][j] * 2;
-					board[k][j] = 0;
-					// time2++;
-					// System.out.println("time2: " + time2);
+				} 
+				if(board[i][k] == board[i][k-1]){
+					board[i][k-1] = board[i][k] * 2;
+					board[i][k] =0;
 					stacksOnStacks.push(board);
 					break;
 				}
 			}
 		}
 	}
-	}
 
-	if(dir==SlideDirection.DOWN){
-		for(int i = 0;i<this.row-1;i++){
+if(dir==SlideDirection.DOWN){
+	for(int i = 0;i<this.row-1;i++){
 		for (int j = 0; j < this.col; j++) {
 			while (board[i - 1][j] == 0) {
-				// System.out.println("below row "+j + " col " +(k+1)+ " row
-				// then val before: " +board[k+1][j]);
-				// System.out.println("current row "+j + " col " +(k)+ " row
-				// then val before: " +board[k][j]);
 				board[k - 1][j] = board[k][j];
 				board[k][j] = 0;
-				// System.out.println("current row "+j + " col " +(k)+ " row
-				// then val after: " +board[k][j]);
-				// System.out.println("below row "+j + " col " +(k+1)+ " row
-				// then val after: " +board[k+1][j]);
-				// time++;
-				// System.out.println("time1: " +time);
 				stacksOnStacks.push(board);
 				break;
 			}
-			if (board[k][j] == board[k - 1][j]) {
+			if(board[k][j] == board[k - 1][j]){
 				board[k - 1][j] = board[k][j] * 2;
 				board[k][j] = 0;
-				// time2++;
-				// System.out.println("time2: " + time2);
 				stacksOnStacks.push(board);
 				break;
 			}
 		}
 	}
-	 return slideDir;
-	}
+	return slideDir;
+}
 
-	@Override
-		public ArrayList<Cell> getNonEmptyTiles() {
-			// nested for loop over whole board and if the value in the board 'cell'
-			// !0 then create new cell at that location.
-			
-			for (int i = 0; i < this.row; i++) {
-				for (int j = 0; j < this.col; j++) {
-					if (!(board[i][j] == 0)){
-						gameCell = new Cell(i, j, board[i][j]);
-						temp.add(gameCell);
-					}
-				}
+@Override
+public ArrayList<Cell> getNonEmptyTiles() {
+	// nested for loop over whole board and if the value in the board 'cell'
+	// !0 then create new cell at that location.
+
+	for (int i = 0; i < this.row; i++) {
+		for (int j = 0; j < this.col; j++) {
+			if (!(board[i][j] == 0)){
+				gameCell = new Cell(i, j, board[i][j]);
+				temp.add(gameCell);
 			}
-			return temp;
 		}
-
-	/**
-	 * call getNonEmptyTiles and if any values == winningValue then set equal to
-	 * USER_WON, if all tiles filled and no moves, USER_LOST if no winning value
-	 * and still moves available, IN_PROGRESS
-	 * 
-	 */
-	@Override
-	public GameStatus getStatus() {
-		GameStatus status;
-		if (gameCell.value != winningValue) {
-			status = GameStatus.IN_PROGRESS;
-		}
-		if (gameCell.value == winningValue) {
-			status = GameStatus.USER_WON;
-		} else {
-			// status = GameStatus.USER_LOST;
-			status = GameStatus.IN_PROGRESS;
-		}
-		return status;
 	}
+	return temp;
+}
 
-	@Override
-	public void undo() {
-		// TODO Auto-generated method stub
-		// set game goard equal to to board when pop
-		stacksOnStacks.pop();
+/**
+ * call getNonEmptyTiles and if any values == winningValue then set equal to
+ * USER_WON, if all tiles filled and no moves, USER_LOST if no winning value
+ * and still moves available, IN_PROGRESS
+ * 
+ */
+@Override
+public GameStatus getStatus() {
+	GameStatus status;
+	if (gameCell.value != winningValue) {
+		status = GameStatus.IN_PROGRESS;
 	}
+	if (gameCell.value == winningValue) {
+		status = GameStatus.USER_WON;
+	} 
+		else {
+		// status = GameStatus.USER_LOST;
+		status = GameStatus.IN_PROGRESS;
+	}
+	return status;
+}
 
-	@Override
-	public int[][] getBoard() {
-		return this.board;
-	}
+@Override
+public void undo() {
+	// TODO Auto-generated method stub
+	// set game goard equal to to board when pop
+	stacksOnStacks.pop();
+}
+
+@Override
+public int[][] getBoard() {
+	return this.board;
+}
+
 }
