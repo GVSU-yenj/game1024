@@ -9,7 +9,7 @@ public class NumberGame implements NumberSlider {
 	TextUI run;
 	GameStatus status;
 	SlideDirection direction;
-	public int winningValue = 2048;
+	public int winCon = 1024;
 	private int[][] board;
 	private int row
 	private int col;
@@ -17,15 +17,13 @@ public class NumberGame implements NumberSlider {
 	private Stack StacksOnStacks = new Stack();
 
 	@Override
-	public void resizeBoard(int height, int width, int winningValue) {
+	public void resizeBoard(int height, int width, int winCon) {
 		try {
 			for (int i = 1; i < 20; i++) {
 				int val = (int) Math.pow(2, i);
-				if (val == winningValue) {
-					board = new int[height][width];// gameCell = new
-					// Cell(height, width,
-					// winningValue);
-					this.winningValue = winningValue;
+				if (val == winCon) {
+					board = new int[height][width];
+					this.winCon = winCon;
 					this.row = height;
 					this.col = width;
 				}
@@ -184,7 +182,7 @@ public class NumberGame implements NumberSlider {
 		}
 
 		/**
-		 * call getNonEmptyTiles and if any values == winningValue then set equal to
+		 * call getNonEmptyTiles and if any values == winCon then set equal to
 		 * USER_WON, if all tiles filled and no moves, USER_LOST if no winning value
 		 * and still moves available, IN_PROGRESS
 		 * 
@@ -192,10 +190,10 @@ public class NumberGame implements NumberSlider {
 		@Override
 		public GameStatus getStatus() {
 			GameStatus status;
-			if (gameCell.value != winningValue) {
+			if (gameCell.value != winCon) {
 				status = GameStatus.IN_PROGRESS;
 			}
-			if (gameCell.value == winningValue) {
+			if (gameCell.value == winCon) {
 				status = GameStatus.USER_WON;
 			} 
 			else {
