@@ -1,22 +1,20 @@
 package game1024;
 
 import java.lang.Math;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Random;
+import java.util.*;
 
 public class NumberGame implements NumberSlider {
-	Random rand = new Random();
+	Random randy = new Random();
 	Cell gameCell;
 	TextUI run;
 	GameStatus status;
 	SlideDirection direction;
 	public int winningValue = 2048;
 	private int[][] board;
-	private int row, col;
+	private int row
+	private int col;
 	public ArrayList<Cell> temp = new ArrayList<Cell>();
-	Deque<int[][]> stack = new ArrayDeque<int[][]>();
+	private Stack StacksOnStacks = new Stack();
 
 	@Override
 	public void resizeBoard(int height, int width, int winningValue) {
@@ -61,11 +59,7 @@ public class NumberGame implements NumberSlider {
 	}
 
 	/**
-	 * Geerate three random numbers, one for the power of 2 for the value, and
-	 * two for the row and coloum to place the value in.
 	 * 
-	 * cycle through the temp array and if the value at the row and col is zero
-	 * then place random var.
 	 * 
 	 * @return Cell a new cell in the board.
 	 */
@@ -76,11 +70,11 @@ public class NumberGame implements NumberSlider {
 		int randVal;
 		int value;
 
-		randVal = rand.nextInt(8) + 1;
+		randVal = randy.nextInt(8) + 1;
 		value = (int) Math.pow(2, (randVal));
 		while (b == false) {
-			int r = rand.nextInt(4);
-			int c = rand.nextInt(4);
+			int r = randy.nextInt(4);
+			int c = randy.nextInt(4);
 			if (board[r][c] == 0) {
 				board[r][c] = value;
 				b = true;
@@ -113,19 +107,10 @@ public class NumberGame implements NumberSlider {
 			if (dir == SlideDirection.RIGHT) {
 				for (int i = 0; i<this.row; i++){
 					for (int j = this.col-1; j>0; j--){
-						//third for loop makes it so the value cannot slide off the board. starting at the row above the bottom and checking
-						//the value below.
-						for(int k = j; k <this.col-1;k++){
 							while(board[i][k-1] == 0){
-								//System.out.println("below row   "+j + " col " +(k+1)+ " row then val before: " +board[k+1][j]);
-								//System.out.println("current row "+j + " col " +(k)+ " row then val before:  " +board[k][j]);
 								board[i][k-1] = board[i][k];
 								board[i][k] = 0;
-								//System.out.println("current row "+j + " col " +(k)+ " row then val after:  " +board[k][j]);
-								//System.out.println("below row   "+j + " col " +(k+1)+ " row then val after:  " +board[k+1][j]);
-								//time++;
-								//System.out.println("time1: " +time);
-								stack.push(board);
+								stacksOnStacks.push(board);
 								break;
 							} 
 							if(board[i][k] == board[i][k-1]){
@@ -133,7 +118,7 @@ public class NumberGame implements NumberSlider {
 								board[i][k] =0;
 								//time2++;
 								//System.out.println("time2: " + time2);
-								stack.push(board);
+								stacksOnStacks.push(board);
 								break;
 							}
 						}
@@ -153,7 +138,7 @@ public class NumberGame implements NumberSlider {
 								//System.out.println("below row   "+j + " col " +(k+1)+ " row then val after:  " +board[k+1][j]);
 								//time++;
 								//System.out.println("time1: " +time);
-								stack.push(board);
+								stacksOnStacks.push(board);
 								break;
 							} 
 							if(board[k][j] == board[k-1][j]){
@@ -161,7 +146,7 @@ public class NumberGame implements NumberSlider {
 								board[k][j] =0;
 								//time2++;
 								//System.out.println("time2: " + time2);
-								stack.push(board);
+								stacksOnStacks.push(board);
 								break;
 							}
 						}
@@ -187,7 +172,7 @@ public class NumberGame implements NumberSlider {
 					// then val after: " +board[k+1][j]);
 					// time++;
 					// System.out.println("time1: " +time);
-					stack.push(board);
+					stacksOnStacks.push(board);
 					break;
 				}
 				if (board[k][j] == board[k - 1][j]) {
@@ -195,7 +180,7 @@ public class NumberGame implements NumberSlider {
 					board[k][j] = 0;
 					// time2++;
 					// System.out.println("time2: " + time2);
-					stack.push(board);
+					stacksOnStacks.push(board);
 					break;
 				}
 			}
@@ -245,12 +230,11 @@ public class NumberGame implements NumberSlider {
 	public void undo() {
 		// TODO Auto-generated method stub
 		// set game goard equal to to board when pop
-		stack.pop();
+		stacksOnStacks.pop();
 	}
 
 	@Override
 	public int[][] getBoard() {
-		// stack.push(board);
 		return this.board;
 	}
 
