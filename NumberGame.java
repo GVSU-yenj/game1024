@@ -37,8 +37,8 @@ public class NumberGame implements NumberSlider {
 	@Override
 	public void reset() {
 		// TODO Make the "this.row" for all of the methods board.length and board[i].length !!
-		for (int i = 0; i < this.row; i++) {
-			for (int j = 0; j < this.col; j++) {
+		for (int x = 0; x < this.row; x++) {
+			for (int y = 0; y < this.col; y++) {
 				board[i][j] = 0;
 			}
 		}
@@ -49,15 +49,14 @@ public class NumberGame implements NumberSlider {
 	@Override
 	public void setValues(int[][] ref) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < this.row; i++) {
-			for (int j = 0; j < this.col; j++) {
+		for (int x = 0; x < this.row; x++) {
+			for (int y = 0; y < this.col; y++) {
 				board[i][j] = ref[i][j];
 			}
 		}
 	}
 
 	/**
-	 * 
 	 * 
 	 * @return Cell a new cell in the board.
 	 */
@@ -73,8 +72,8 @@ public class NumberGame implements NumberSlider {
 		while (b == false) {
 			int r = randy.nextInt(4);
 			int c = randy.nextInt(4);
-			if (board[r][c] == 0) {
-				board[r][c] = value;
+			if (board[x][y] == 0) {
+				board[x][y] = value;
 				b = true;
 			}
 		}
@@ -172,10 +171,10 @@ public class NumberGame implements NumberSlider {
 			// nested for loop over whole board and if the value in the board 'cell'
 			// !0 then create new cell at that location.
 
-			for (int i = 0; i < this.row; i++) {
-				for (int j = 0; j < this.col; j++) {
-					if (!(board[i][j] == 0)){
-						gameCell = new Cell(i, j, board[i][j]);
+			for (int x = 0; x < this.row; x++) {
+				for (int y = 0; y < this.col; y++) {
+					if (!(board[x][y] == 0)){
+						gameCell = new Cell(x, y, board[x][y]);
 						temp.add(gameCell);
 					}
 				}
@@ -209,7 +208,7 @@ public class NumberGame implements NumberSlider {
 		public void undo() {
 			// TODO Auto-generated method stub
 			// set game goard equal to to board when pop
-			stacksOnStacks.pop();
+			board = stacksOnStacks.pop();
 		}
 
 		@Override
