@@ -209,7 +209,7 @@ public class NumberGame implements NumberSlider {
 		public void undo() {
 			// TODO Auto-generated method stub
 			// set game goard equal to to board when pop
-			stacksOnStacks.pop();
+			board = stacksOnStacks.pop();
 		}
 
 		@Override
