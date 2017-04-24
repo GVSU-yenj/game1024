@@ -10,11 +10,13 @@ public class DaGame implements NumberSlider {
 	GameStatus status;
 	SlideDirection direction;
 	public int winCon = 1024;
-	private int[][] board;
-	private int row;
-	private int col;
+	private int[][] board = new int[4][4];
+	//private int row;
+	//private int col;
+	private int height;
+	private int width;
 	public ArrayList<Cell> temp = new ArrayList<Cell>();
-	private Stack StacksOnStacks = new Stack();
+	private Stack<int[][]> stacksOnStacks = new Stack<int[][]>();
 
 	@Override
 	public void resizeBoard(int height, int width, int winCon) {
@@ -24,8 +26,6 @@ public class DaGame implements NumberSlider {
 				if (val == winCon) {
 					board = new int[height][width];
 					this.winCon = winCon;
-					this.row = height;
-					this.col = width;
 				}
 			}
 		} 
@@ -36,9 +36,9 @@ public class DaGame implements NumberSlider {
 
 	@Override
 	public void reset() {
-		// TODO Make the "this.row" for all of the methods board.length and board[i].length !!
-		for (int x = 0; x < this.row; x++) {
-			for (int y = 0; y < this.col; y++) {
+		// TODO Make the "board.length" for all of the methods board.length and board[i].length !!
+		for (int x = 0; x < board.length; x++) {
+			for (int y = 0; y < board[x].length; y++) {
 				board[x][y] = 0;
 			}
 		}
@@ -49,8 +49,8 @@ public class DaGame implements NumberSlider {
 	@Override
 	public void setValues(int[][] ref) {
 		// TODO Auto-generated method stub
-		for (int x = 0; x < this.row; x++) {
-			for (int y = 0; y < this.col; y++) {
+		for (int x = 0; x < board.length; x++) {
+			for (int y = 0; y < board[x].length; y++) {
 				board[x][y] = ref[x][y];
 			}
 		}
@@ -60,23 +60,25 @@ public class DaGame implements NumberSlider {
 	 * 
 	 * @return Cell a new cell in the board.
 	 */
-	//TODO: modify to make it not do the while checker!
-	//while smarter, it is not what I would have done. 
-	//I would have had it check random spots until it placed something!
+	//TODO: make it check for empty spots twice b4 placing.
 	@Override
 	public Cell placeRandomValue() {
-		boolean b = false;
-		int randVal = randy.nextInt(8) + 1;;
-		int value = (int) Math.pow(2, (randVal));
+		boolean placed = false;
+		int randPlaceX = randy.nextInt(height);
+		int randPlaceY = randy.nextInt(width);
+		int randVal1 = randy.nextInt(8) + 1;
+		int randVal2 = randy.nextInt(8) + 1;;
+		int val1 = (int) Math.pow(2, randVal1);
+		int val2 = (int) Math.pow(2, randVal2);
 		
-		while (b == false) {
-			int r = randy.nextInt(4);
-			int c = randy.nextInt(4);
-			if (board[x][y] == 0) {
-				board[x][y] = value;
-				b = true;
+		while(placed = false){
+			if(board[randPlaceX][randPlaceY] == null){
+				board[randPlaceX][randPlaceY] = randVal1;
+				placed = true;
 			}
+			
 		}
+
 		return gameCell;
 	}
 
@@ -85,8 +87,8 @@ public class DaGame implements NumberSlider {
 		boolean slideDir = false;
 		//TODO: mod the directions accordingly. Right now they all do the same thing.
 		if(dir == SlideDirection.LEFT){
-			for(int x = 0; i<this.row; i++){
-				for(int y = this.col-1; y>0; y--){
+			for(int x = 1; x < board.length; x++){
+				for(int y = board[x].length-1; y > 0; y--){
 					while(board[x][y-1] == 0){
 						board[x][y-1] = board[x][y];
 						board[x][y] = 0;
@@ -104,8 +106,8 @@ public class DaGame implements NumberSlider {
 			}
 		}
 		if (dir == SlideDirection.RIGHT){
-			for(int x = 0; i<this.row; i++){
-				for(int y = this.col-1; y>0; y--){
+			for(int x = 0; x < board.length; x++){
+				for(int y = board[x].length-1; y > 0; y--){
 					while(board[x][y-1] == 0){
 						board[x][y-1] = board[x][y];
 						board[x][y] = 0;
@@ -123,8 +125,8 @@ public class DaGame implements NumberSlider {
 			}
 		}
 		if(dir==SlideDirection.UP){
-			for(int x = 0; i<this.row; i++){
-				for(int y = this.col-1; y>0; y--){
+			for(int x = 0; x < board.length; x++){
+				for(int y = board[x].length-1; y>0; y--){
 					while(board[x][y-1] == 0){
 						board[x][y-1] = board[x][y];
 						board[x][y] = 0;
@@ -142,8 +144,8 @@ public class DaGame implements NumberSlider {
 			}
 		}
 		if(dir==SlideDirection.DOWN){
-			for(int x = 0; i<this.row; i++){
-				for(int y = this.col-1; y>0; y--){
+			for(int x = 0; x<board.length; x++){
+				for(int y = board[x].length-1; y>0; y--){
 					while(board[x][y-1] == 0){
 						board[x][y-1] = board[x][y];
 						board[x][y] = 0;
@@ -171,8 +173,8 @@ public class DaGame implements NumberSlider {
 			// nested for loop over whole board and if the value in the board 'cell'
 			// !0 then create new cell at that location.
 
-			for (int x = 0; x < this.row; x++) {
-				for (int y = 0; y < this.col; y++) {
+			for (int x = 0; x < board.length; x++) {
+				for (int y = 0; y < board[x].length; y++) {
 					if (!(board[x][y] == 0)){
 						gameCell = new Cell(x, y, board[x][y]);
 						temp.add(gameCell);
@@ -206,7 +208,6 @@ public class DaGame implements NumberSlider {
 
 		@Override
 		public void undo() {
-			// TODO Auto-generated method stub
 			// set game goard equal to to board when pop
 			board = stacksOnStacks.pop();
 		}
