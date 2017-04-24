@@ -14,7 +14,7 @@ public class TextUI {
     public int winningValue;
 
     public TextUI() {
-        game = new NumberGame();
+        game = new DaGame();
 
         if (game == null) {
             System.err.println ("*---------------------------------------------*");
