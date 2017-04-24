@@ -13,8 +13,8 @@ public class DaGame implements NumberSlider {
 	private int[][] board = new int[4][4];
 	//private int row;
 	//private int col;
-	private int height;
-	private int width;
+	private int height = 4;
+	private int width = 4;
 	public ArrayList<Cell> temp = new ArrayList<Cell>();
 	private Stack<int[][]> stacksOnStacks = new Stack<int[][]>();
 
@@ -71,9 +71,13 @@ public class DaGame implements NumberSlider {
 		int val1 = (int) Math.pow(2, randVal1);
 		int val2 = (int) Math.pow(2, randVal2);
 		
-		while(placed = false){
-			if(board[randPlaceX][randPlaceY] == null){
-				board[randPlaceX][randPlaceY] = randVal1;
+		while(!placed){
+			if(board[randPlaceX][randPlaceY] == 0){
+				board[randPlaceX][randPlaceY] = val1;
+				placed = true;
+			}
+			if(board[randPlaceX][randPlaceY] == 0){
+				board[randPlaceX][randPlaceY] = val2;
 				placed = true;
 			}
 			
@@ -96,8 +100,8 @@ public class DaGame implements NumberSlider {
 						stacksOnStacks.push(board);
 						break;
 					} 
-					if(board[x][y] == board[x][y-1]){
-						board[x][y] = board[x][y] * 2;
+					if(board[x][y] == board[x-1][y]){
+						board[x-1][y] = board[x][y] * 2;
 						board[x][y] = 0;
 						stacksOnStacks.push(board);
 						break;
