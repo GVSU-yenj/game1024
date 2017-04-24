@@ -3,7 +3,7 @@ package game1024;
 import java.lang.Math;
 import java.util.*;
 
-public class NumberGame implements NumberSlider {
+public class DaGame implements NumberSlider {
 	Random randy = new Random();
 	Cell gameCell;
 	TextUI run;
@@ -11,7 +11,7 @@ public class NumberGame implements NumberSlider {
 	SlideDirection direction;
 	public int winCon = 1024;
 	private int[][] board;
-	private int row
+	private int row;
 	private int col;
 	public ArrayList<Cell> temp = new ArrayList<Cell>();
 	private Stack StacksOnStacks = new Stack();
@@ -39,7 +39,7 @@ public class NumberGame implements NumberSlider {
 		// TODO Make the "this.row" for all of the methods board.length and board[i].length !!
 		for (int x = 0; x < this.row; x++) {
 			for (int y = 0; y < this.col; y++) {
-				board[i][j] = 0;
+				board[x][y] = 0;
 			}
 		}
 		placeRandomValue();
@@ -51,7 +51,7 @@ public class NumberGame implements NumberSlider {
 		// TODO Auto-generated method stub
 		for (int x = 0; x < this.row; x++) {
 			for (int y = 0; y < this.col; y++) {
-				board[i][j] = ref[i][j];
+				board[x][y] = ref[x][y];
 			}
 		}
 	}
