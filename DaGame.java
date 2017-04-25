@@ -110,7 +110,7 @@ public class DaGame implements NumberSlider {
 			}
 		}
 		if (dir == SlideDirection.RIGHT){
-			for(int x = 1; x < board.length; x++){
+			for(int x = 0; x < board.length; x++){
 				for(int y = board[x].length-1; y > 0; y--){
 					while(board[x][y] == 0){
 						board[x+1][y] = board[x][y];
