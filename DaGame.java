@@ -93,8 +93,8 @@ public class DaGame implements NumberSlider {
 		if(dir == SlideDirection.LEFT){
 			for(int x = 1; x < board.length; x++){
 				for(int y = board[x].length-1; y > 0; y--){
-					while(board[x][y-1] == 0){
-						board[x][y-1] = board[x][y];
+					while(board[x][y] == 0){
+						board[x-1][y] = board[x][y];
 						board[x][y] = 0;
 						//should this stack addition line be here? uhhhhhhhhh I mean it'll work
 						stacksOnStacks.push(board);
@@ -110,17 +110,17 @@ public class DaGame implements NumberSlider {
 			}
 		}
 		if (dir == SlideDirection.RIGHT){
-			for(int x = 0; x < board.length; x++){
+			for(int x = 1; x < board.length; x++){
 				for(int y = board[x].length-1; y > 0; y--){
-					while(board[x][y-1] == 0){
-						board[x][y-1] = board[x][y];
+					while(board[x][y] == 0){
+						board[x+1][y] = board[x][y];
 						board[x][y] = 0;
 						//should this stack addition line be here? uhhhhhhhhh I mean it'll work
 						stacksOnStacks.push(board);
 						break;
 					} 
-					if(board[x][y] == board[x][y-1]){
-						board[x][y] = board[x][y] * 2;
+					if(board[x][y] == board[x+1][y]){
+						board[x+1][y] = board[x][y] * 2;
 						board[x][y] = 0;
 						stacksOnStacks.push(board);
 						break;
@@ -150,14 +150,14 @@ public class DaGame implements NumberSlider {
 		if(dir==SlideDirection.DOWN){
 			for(int x = 0; x<board.length; x++){
 				for(int y = board[x].length-1; y>0; y--){
-					while(board[x][y-1] == 0){
-						board[x][y-1] = board[x][y];
+					while(board[x][y+1] == 0){
+						board[x][y+1] = board[x][y];
 						board[x][y] = 0;
 						//should this stack addition line be here? uhhhhhhhhh I mean it'll work
 						stacksOnStacks.push(board);
 						break;
 					} 
-					if(board[x][y] == board[x][y-1]){
+					if(board[x][y] == board[x][y+1]){
 						board[x][y] = board[x][y] * 2;
 						board[x][y] = 0;
 						stacksOnStacks.push(board);
